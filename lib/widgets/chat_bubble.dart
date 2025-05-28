@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ChatBubble extends StatelessWidget {
   final String message;
@@ -14,15 +13,28 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: EdgeInsets.only(
+        top: 8.0,
+        bottom: 8.0,
+        left: isMe ? 80 : 16,
+        right: isMe ? 16 : 80,
+      ),
       child: Row(
         mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.7,
+            ),
             decoration: BoxDecoration(
-              color: isMe ? Colors.blue[100] : Colors.grey[200],
-              borderRadius: BorderRadius.circular(20),
+              color: isMe ? const Color(0xFFdcf8c6) : Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(isMe ? 16 : 4),
+                topRight: Radius.circular(isMe ? 4 : 16),
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.05),
@@ -31,14 +43,13 @@ class ChatBubble extends StatelessWidget {
                 ),
               ],
             ),
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.7,
-            ),
             child: Text(
               message,
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                color: Colors.black87,
+              style: const TextStyle(
+                fontSize: 14,
+                height: 1.4,
+                color: Color(0xFF303030),
+                fontFamily: 'Roboto',
               ),
             ),
           ),
