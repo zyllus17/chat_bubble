@@ -22,34 +22,38 @@ class ChatBubble extends StatelessWidget {
       child: Row(
         mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.7,
-            ),
-            decoration: BoxDecoration(
-              color: isMe ? const Color(0xFFdcf8c6) : Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(isMe ? 16 : 4),
-                topRight: Radius.circular(isMe ? 4 : 16),
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
+          Flexible(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.7,
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: isMe ? const Color(0xFFdcf8c6) : Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(isMe ? 16 : 4),
+                  topRight: Radius.circular(isMe ? 4 : 16),
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
                 ),
-              ],
-            ),
-            child: Text(
-              message,
-              style: const TextStyle(
-                fontSize: 14,
-                height: 1.4,
-                color: Color(0xFF303030),
-                fontFamily: 'Roboto',
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 14,
+                  height: 1.4,
+                  color: Color(0xFF303030),
+                ),
+                softWrap: true,
+                overflow: TextOverflow.clip,
+                textAlign: TextAlign.start,
               ),
             ),
           ),

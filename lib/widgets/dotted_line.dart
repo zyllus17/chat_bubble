@@ -19,8 +19,8 @@ class DottedLine extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: color,
             width: strokeWidth,
+            color: color,
             style: BorderStyle.solid,
           ),
         ),

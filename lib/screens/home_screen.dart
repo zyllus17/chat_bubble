@@ -60,12 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     pw.Container(
                       height: 1,
-                      color: PdfColor(0, 0, 0, 0.1),
                       decoration: pw.BoxDecoration(
                         border: pw.Border(
                           bottom: pw.BorderSide(
                             width: 1,
-                            style: pw.BorderStyle.solid,
                             color: PdfColor(0, 0, 0, 0.1),
                           ),
                         ),
@@ -95,10 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.blue[100],
+        backgroundColor: Colors.brown,
       ),
       body: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             child: Container(
@@ -120,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
                       controller: _messageController,
@@ -166,33 +164,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Container(
-                      constraints: const BoxConstraints(maxHeight: 300),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: _messages.length,
-                        itemBuilder: (context, index) {
-                          final message = _messages[index];
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ChatBubble(
-                                message: message['message']!,
-                                isMe: message['sender'] == 'me',
-                              ),
-                              const DottedLine(
-                                height: 1,
-                                strokeWidth: 1,
-                                color: Color(0xFFcccccc),
-                              ),
-                              if (index < _messages.length - 1 &&
-                                  message['sender'] != _messages[index + 1]['sender'])
-                                const SizedBox(height: 16),
-                            ],
-                          );
-                        },
-                      ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                        final message = _messages[index];
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ChatBubble(
+                              message: message['message']!,
+                              isMe: message['sender'] == 'me',
+                            ),
+                            const DottedLine(
+                              height: 1,
+                              strokeWidth: 1,
+                              color: Color(0xFFcccccc),
+                            ),
+                            if (index < _messages.length - 1 &&
+                                message['sender'] != _messages[index + 1]['sender'])
+                              const SizedBox(height: 16),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
