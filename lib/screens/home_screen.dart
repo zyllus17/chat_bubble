@@ -98,79 +98,104 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.blue[100],
       ),
       body: Column(
+        mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _messageController,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      labelText: 'Enter your message',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: DropdownButtonFormField<bool>(
-                          value: _isMe,
-                          decoration: const InputDecoration(
-                            labelText: 'Sender',
-                            border: OutlineInputBorder(),
-                          ),
-                          items: const [
-                            DropdownMenuItem(
-                              value: false,
-                              child: Text('Them'),
-                            ),
-                            DropdownMenuItem(
-                              value: true,
-                              child: Text('Me'),
-                            ),
-                          ],
-                          onChanged: (value) {
-                            setState(() {
-                              _isMe = value ?? false;
-                            });
-                          },
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    const Color(0xFFe5ddd5),
+                    const Color(0xFFdcf8c6),
+                  ],
+                ),
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/whatsapp_background.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: _messageController,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        labelText: 'Enter your message',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      ElevatedButton(
-                        onPressed: _addMessage,
-                        child: const Text('Add Message'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _messages.length,
-                      itemBuilder: (context, index) {
-                        final message = _messages[index];
-                        return Column(
-                          children: [
-                            ChatBubble(
-                              message: message['message']!,
-                              isMe: message['sender'] == 'me',
-                            ),
-                            const DottedLine(
-                              height: 1,
-                              strokeWidth: 1,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        );
-                      },
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<bool>(
+                            value: _isMe,
+                            decoration: const InputDecoration(
+                              labelText: 'Sender',
+                              border: OutlineInputBorder(),
+                            ),
+                            items: const [
+                              DropdownMenuItem(
+                                value: false,
+                                child: Text('Them'),
+                              ),
+                              DropdownMenuItem(
+                                value: true,
+                                child: Text('Me'),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _isMe = value ?? false;
+                              });
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        ElevatedButton(
+                          onPressed: _addMessage,
+                          child: const Text('Add Message'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      constraints: const BoxConstraints(maxHeight: 300),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: _messages.length,
+                        itemBuilder: (context, index) {
+                          final message = _messages[index];
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ChatBubble(
+                                message: message['message']!,
+                                isMe: message['sender'] == 'me',
+                              ),
+                              const DottedLine(
+                                height: 1,
+                                strokeWidth: 1,
+                                color: Color(0xFFcccccc),
+                              ),
+                              if (index < _messages.length - 1 &&
+                                  message['sender'] != _messages[index + 1]['sender'])
+                                const SizedBox(height: 16),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
